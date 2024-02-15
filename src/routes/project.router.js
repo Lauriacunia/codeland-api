@@ -6,10 +6,11 @@ import {
   update,
   deleteOne,
 } from "../controllers/project.controller.js";
+import { isAuth } from "../middlewares/auth.middlewares.js";
 
 const router = Router();
 
-router.get("/", getAll);
+router.get("/", isAuth, getAll);
 router.get("/:id", getOne);
 router.post("/", create);
 router.put("/:id", update);

@@ -6,17 +6,20 @@ const options = {
   algorithm: "HS256",
 };
 
-export const generateToken = (user, minutes) => {
+export const generateToken = (email, minutes) => {
+  console.log("user email=> ", email);
   const payload = {
-    sub: user.email, // Utiliza el email como Subject (sub)
+    sub: email, // Utiliza el email como Subject (sub)
     exp: getExpirationDate(minutes),
   };
+  console.log("payload => ", payload);
   return jwt.sign(payload, secretKey, options);
 };
 
 export const verifyToken = (token) => {
   try {
     const payload = jwt.verify(token, secretKey, options);
+    console.log("payload => ", payload);
     if (payload.exp && payload.exp <= getExpirationDate(0)) {
       // si la fecha de exp es menor a la fecha actual
       return null; // Token expirado

@@ -4,26 +4,14 @@ export class UserMongoDao extends BaseMongoDao {
   constructor() {
     super(userModel);
   }
-  async getUserByUsername(username) {
-    try {
-      const user = await this.db.findOne(username);
-      return user;
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
 
   async getUserByEmail(email) {
     try {
+      console.log("3-user mongo dao");
       const user = await this.db.findOne(email);
       return user;
     } catch (err) {
       throw new Error(err);
     }
-  }
-
-  async getPurchaser(cart) {
-    const user = await this.db.findOne({ cart: cart });
-    return user?.email;
   }
 }

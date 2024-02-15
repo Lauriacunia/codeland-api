@@ -13,12 +13,9 @@ import {
   passportSession,
 } from "./config/passport.config.js";
 
-/** ━━━━━━━━━━━ variables ━━━━━━━━━━━ */
-
 const app = express();
 const { PORT } = CONFIG;
 
-/** ━━━━━━━━━━━ middlewares ━━━━━━━━━━━*/
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(express.json());
@@ -35,13 +32,10 @@ app.use(
   })
 );
 
-/** ━━━━━━━━━━━ routes ━━━━━━━━━━━ */
 app.use("/", router);
 
-/** ━━━━━━━━━━━connection mongoDB ━━━━━━━━━━━ */
 connectMongoDB();
 
-/** ━━━━━━━━━━━ server up ━━━━━━━━━━━ */
 const server = app.listen(PORT, () => {
   console.log(`Servidor Express en funcionamiento en el puerto ${PORT}`);
   console.log(

@@ -8,6 +8,7 @@ export class UserService extends BaseService {
   }
 
   async getUserByEmail(email) {
+    console.log("2-user service ");
     return await this.dao.getUserByEmail(email);
   }
 }

@@ -1,6 +1,6 @@
 import passport from "passport";
 import UserDtoResponse from "../dto/responses/user.dto.response.js";
-import { generateToken, verifyToken } from "../services/jwt.service.js";
+import { generateToken } from "../services/jwt.service.js";
 
 class AuthController {
   register(req, res, next) {
@@ -32,22 +32,23 @@ class AuthController {
   }
   // Utiliza Passport para la autenticación (login)
   login(req, res, next) {
-    passport.authenticate("local", (err, user, info) => {
+    passport.authenticate("login", (err, user, info) => {
+      console.log("4- user en auth controller=> ", user);
       try {
         if (err) {
           return next(err);
         }
 
         if (!user) {
-          return res.status(401).json({ message: "Credenciales inválidas" });
+          return res.status(401).json({ message: info.message });
         }
 
         req.login(user, (err) => {
           if (err) {
             return next(err);
           }
-
-          return res.json({ message: "Inicio de sesión exitoso", user });
+          const userDto = new UserDtoResponse(user);
+          res.json({ message: info.message, user: userDto });
         });
       } catch (error) {
         next(error);
